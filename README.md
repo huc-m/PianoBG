@@ -23,4 +23,5 @@ The program requires libfluidsynth, version > 2.0.
 
 #### Compile
 To compile PianoBG one must have a developer version of libfluidsynth (https://www.fluidsynth.org/) or at least its include files, version > 2.0.
+
 To the horror of the genuine Linux devotee, there is provided a binary for Debian 11 "Bullseye" (may be contaminated with the Virus – don't try this if You do not get a shot). There is also a binary of libfluidsynth, compiled from "https://github.com/FluidSynth/fluidsynth" ("Bullseye" has an older version, that is not useable).
