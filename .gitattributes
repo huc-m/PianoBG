@@ -1,2 +1,2 @@
-binary  export-ignore 
+binary/*  export-ignore 
 .git*   export-ignore
