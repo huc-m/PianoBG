@@ -27,7 +27,7 @@ static void guys_tuple_dispatch_note(int note_key) {
         if(note_key == guys_tuple[i]) {
             for(; i < guys_tuple[0]; i++) guys_tuple[i] = guys_tuple[i + 1];
             guys_tuple[0]--;
-            break;
+            return;
         }
 }
 
