@@ -7,7 +7,7 @@ PianoBG (BeGinner) is aspired from PianoBooster. PianoBoster is great program, v
 #### Functionality
 This is the initial version that does almost nothing but check if the pianist presses only right keys in a succession specified in a MIDI file.
 
-There are utilized the follows control keys (transport controls mist be switched to MIDI protocol):
+There are utilized the follows control keys (transport controls mist be switched to the MIDI protocol):
 * "Play" – start again;
 * "Pause" – print some number of incoming notes (does not help);
 * "Stop" – quit.
