@@ -31,7 +31,7 @@ void print_coming_notes(int position) {
             for(k = 0; k < max_h; k++) if((tune_data[i][j]&0b01111111) == temp[k]) break;
             if(k == max_h) temp[max_h++] = tune_data[i][j]&0b01111111;
         }
-    for(k = 0, max_h; k < max_h; k++){
+    for(k = 0; k < max_h; k++){
         for(max = temp[jm = k], j = k + 1; j < max_h; j++) if(temp[j] > max) max = temp[jm = j]; temp[jm] = temp[k];
         for(i = position; i < end; i++) {
             *((int32_t*)note) = *((int32_t*)"|  ");
@@ -52,7 +52,7 @@ void print_coming_notes(int position) {
             for(k = 0; k < max_h; k++) if((tune_data[i][j]&0b01111111) == temp[k]) break;
             if(k == max_h) temp[max_h++] = tune_data[i][j]&0b01111111;
         }
-    for(k = 0, max_h; k < max_h; k++){
+    for(k = 0; k < max_h; k++){
         for(max = temp[jm = k], j = k + 1; j < max_h; j++) if(temp[j] > max) max = temp[jm = j]; temp[jm] = temp[k];
         for(i = position; i < end; i++) {
             *((int32_t*)note) = *((int32_t*)"|  ");
