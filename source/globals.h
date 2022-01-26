@@ -10,6 +10,9 @@ extern uint8_t tune_data[][11];     //[0] &0x0f - total number; /0x10 - left han
 extern int tune_length;
 #define TUNE_LENGTH_MAX 1000
 
+#define CONFIG_LINE_CHARACTER_MAX 250
+#define CONFIG_OPTION_CHARACTER_MAX 50
+
 extern int left_hand_channel;
 extern int right_hand_channel;
 

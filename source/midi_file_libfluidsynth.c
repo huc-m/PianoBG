@@ -25,6 +25,7 @@ static void introduce_note(int note, int channel){
             tune_data[tune_length][i] = tune_data[tune_length][i-1];
         tune_data[tune_length][left_number] = note + 0b10000000;
         tune_data[tune_length][0] = left_number * 0x10 + total_number;
+        return;
     }
     if (channel == right_hand_channel) {
         tune_data[tune_length][total_number] = note + 0b10000000;

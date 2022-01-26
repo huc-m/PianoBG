@@ -13,14 +13,14 @@ int number_of_coming_notes = 20;
 
 int read_config(char *tune_config_directory){
    FILE* config_file;
-   char data[250];
-   char option[50];
+   char data[CONFIG_LINE_CHARACTER_MAX];
+   char option[CONFIG_OPTION_CHARACTER_MAX];
    int value;
    bool key = false;
 
    sprintf(data, "%s%s", getenv("HOME"), CONFIG_FILE_DIRECTORY CONFIG_FILE);
    config_file = fopen(data, "r"); if(config_file == 0) return 1;
-   while (fgets(data,199, config_file) != 0) {
+   while (fgets(data,CONFIG_LINE_CHARACTER_MAX-1, config_file) != 0) {
         if(strlen(data) < 5) continue;
         sscanf(data, "%s %i", option, &value);
         if(option[0] == '#') continue;
@@ -44,15 +44,15 @@ int read_config(char *tune_config_directory){
 
 int read_flyid_config (fluid_settings_t* fluid_settings) {
     FILE* config_file;
-    char data[300];
-    char option[50];
-    char value[200];
+    char data[CONFIG_LINE_CHARACTER_MAX];
+    char option[CONFIG_OPTION_CHARACTER_MAX];
+    char value[CONFIG_LINE_CHARACTER_MAX];
     bool key = false;
     tune_data[0][0] = 0;
 
     sprintf(data, "%s%s", getenv("HOME"), CONFIG_FILE_DIRECTORY CONFIG_FILE);
     config_file = fopen(data, "r"); if(config_file == 0) return 1;
-    while (fgets(data,199, config_file) != 0) {
+    while (fgets(data,CONFIG_LINE_CHARACTER_MAX-1, config_file) != 0) {
         if(strlen(data) < 5) continue;
          sscanf(data, "%s %s", option, value);
         if(option[0] == '#') continue;
