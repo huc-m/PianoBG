@@ -2,7 +2,7 @@
 MIDI keyboard piano for piano beginner.
 
 #### Introduction
-PianoBG (BeGiner) is aspired from PianoBooster. PianoBoster is great program, very elaborated and rich of functionality. However in some cases that creates problem for me as a (sheer) beginner pianist. Thus make me to write this simple program that does (I hope) only one thing – check if the guy presses the proper keys in the due order.
+PianoBG (BeGinner) is aspired from PianoBooster. PianoBoster is great program, very elaborated and rich of functionality. However in some cases that creates problems for me as a (sheer) beginner pianist. Thus make me to write this simple program that does (I hope) only one thing – check if the guy presses the proper keys in the due order.
 
 #### Functionality
 This is the initial version that does almost nothing but check if the pianist presses only right keys in a succession specified in a MIDI file. There are utilized the follows control keys (transport controls mist be switched to MIDI protocol):
@@ -12,8 +12,8 @@ This is the initial version that does almost nothing but check if the pianist pr
 
 #### Usage
 There are two configuration files:
-* main configuration "PianoBG.conf", which must be in "~.config/PianoBG/";
-* each tune has its own configuration, which is placed in the directory, mentioned in the "PianoBG.conf".
+* main configuration "PianoBG.conf" which must be in "~.config/PianoBG/";
+* each tune has its own configuration which is placed in the directory mentioned in the "PianoBG.conf".
 
 The program is started as:
 ```
