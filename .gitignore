@@ -2,6 +2,7 @@
 *.d
 *.pro.user
 *.user
+buid*
 
 # Object files
 *.o
