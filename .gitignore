@@ -1,6 +1,6 @@
 # Prerequisites
 *.d
-buid*
+buid*/
 
 # Object files
 *.o
