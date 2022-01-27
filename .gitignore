@@ -1,7 +1,5 @@
 # Prerequisites
 *.d
-*.pro.user
-*.user
 buid*
 
 # Object files
