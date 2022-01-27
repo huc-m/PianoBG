@@ -1,5 +1,7 @@
 # Prerequisites
 *.d
+*.pro.user
+*.user
 
 # Object files
 *.o
