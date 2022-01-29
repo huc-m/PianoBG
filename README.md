@@ -21,10 +21,13 @@ There are two configuration files:
 The program is started as:
 ```
 PianoPG tune.conf
-or
-PianoBG 
-for free play.
 ```
+or
+```
+PianoBG 
+```
+for free play.
+
 The program requires libfluidsynth, version > 2.0.
 
 #### Compile
