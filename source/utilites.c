@@ -19,12 +19,11 @@ void print_guys_wrong_note(int position, int wrong_note_key) {
     printf("\nWrong note %s on position %i.\n", note_from_midi_code(wrong_note_key, note), position);
 }
 
-void print_coming_notes(int position) {
+int print_coming_notes(int position) {
     char note[4];
     int i, j, k, jm;
     int end = position + number_of_coming_notes; if(end > tune_length) end = tune_length;
     int8_t max, max_h, temp[10];
-
     printf("\n");
     for(max_h = 0, i = position; i < end; i++)
         for(j = 1; j <= tune_data[i][0] / 0x10; j++) {
@@ -46,6 +45,7 @@ void print_coming_notes(int position) {
     }
 
     for(i = position; i < end; i++) printf("+---"); printf("\n");
+    int stature = max_h;
 
     for(max_h = 0, i = position; i < end; i++)
         for(j = tune_data[i][0] / 0x10+1; j <= (tune_data[i][0]&0x0f); j++) {
@@ -65,4 +65,5 @@ void print_coming_notes(int position) {
         }
         printf("\n");
     }
+    return stature + max_h;
 }

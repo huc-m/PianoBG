@@ -6,6 +6,9 @@ int control_pipe[2];
 int cur_position;
 int8_t guys_tuple[11]; // [0] - total number
 
+bool notes;
+int stature, notes_pos;
+
 static void guys_tuple_furnish_note(int note_key) {
     guys_tuple[++guys_tuple[0]] = note_key;
 }
@@ -45,8 +48,15 @@ static void check_guys_tuple_and_go(){
             if(guys_tuple[i] == (tune_data[cur_position][j]&0b01111111) || tune_data[cur_position][j] < 0b10000000) break;
         if(i > guys_tuple[0]) return;
     }
-    guys_tuple[0] = 0;
-    print_guys_progress(++cur_position); fflush(stdout);
+    guys_tuple[0] = 0; ++cur_position;
+    if(notes)
+        if(cur_position >= notes_pos + number_of_coming_notes || cur_position >= tune_length)
+            {notes = false; printf("\e[;r\e[2J"); fflush(stdout);}
+        else {
+            printf("\e[s\e[%i;1H%0*i\e[u",  stature + 3, (cur_position - notes_pos) * 4, 0);
+            fflush(stdout);
+        }
+    else {print_guys_progress(cur_position); fflush(stdout);}
     if(cur_position >= tune_length) write(control_pipe[1], "e", 1);
     return;
 }
@@ -70,7 +80,20 @@ static int read_keyboard(void *data, fluid_midi_event_t *event){
         switch (note_key) {
             case MIDI_KEYBOARD_STOP_CONTROL : write(control_pipe[1], "s", 1)  ; break;
             case MIDI_KEYBOARD_PLAY_CONTROL : write(control_pipe[1], "r", 1)  ; break;
-            case MIDI_KEYBOARD_PAUSE_CONTROL: print_coming_notes(cur_position); fflush(stdout); break;
+            case MIDI_KEYBOARD_PAUSE_CONTROL:
+                if(notes) {
+                    notes = false; printf("\e[;r\e[u");
+                } else {
+                    notes = true; notes_pos = cur_position;
+                    printf("\e[2J\e[1H");
+                    stature = print_coming_notes(cur_position);
+                    printf("\e[%i;r\e[?6l\e[%1$iH\e[s", stature+4);
+                }
+            break;
+            case MIDI_KEYBOARD_LEFT_BUTTON:
+                if(note_key){
+                    cur_position = notes_pos;  printf("\e[s\e[%i;1H\e[2K\e[u", stature + 3); fflush(stdout);
+                }
         }
     }
     return FLUID_OK;
@@ -80,20 +103,24 @@ void read_midi_keyboard_with_libfluidsynth(fluid_settings_t* fluid_settings){
     pipe(control_pipe);
     char key;
     fluid_midi_driver_t* read_keyboard_driver;
-    void* keyboard_data;
 
-    read_keyboard_driver = new_fluid_midi_driver(fluid_settings, read_keyboard, keyboard_data);
+    if (send_tune)
+        read_keyboard_driver = new_fluid_midi_driver(fluid_settings, read_keyboard, NULL);
+    else
+        read_keyboard_driver = new_fluid_midi_driver(fluid_settings, fluid_synth_handle_midi_event, fluid_synth);
 
     do {
+        notes = false; printf("\e[;r\e[2J");
         guys_tuple[0] = 0;
         cur_position = 0;
         read(control_pipe[0], &key, 1);
         switch (key) {
-            case 'e': printf("\n\n<<<<<<<<<< Tune is over. >>>>>>>>>>");
-            case 'r': printf("\n\n<<<<<<<<<< Start again.  >>>>>>>>>>\n\n"); fflush(stdout);
+            case 'e': printf("\n\n<<<<<<<<<< Tune is over >>>>>>>>>>");
+            case 'r': printf("\n\n<<<<<<<<<< Start again  >>>>>>>>>>\n\n"); fflush(stdout);
         }
     } while (key != 's');
 
+    printf("\e[;r\e[2J");
     delete_fluid_midi_driver(read_keyboard_driver);
     close(control_pipe[0]); close(control_pipe[1]);
 }

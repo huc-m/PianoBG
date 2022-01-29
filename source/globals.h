@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 #include <fluidsynth.h>
-
+#include <stdbool.h>
 extern uint8_t tune_data[][11];     //[0] &0x0f - total number; /0x10 - left hand
                                     //>0x0f - NoteOn event; <0x0f - NoteOf event was not happen
                                     //left hand notes first then right hand notes
@@ -23,6 +23,8 @@ extern int wrong_note_key;
 extern int wrong_note_velocity;
 extern int guys_progress_breadth;
 extern int number_of_coming_notes;
+
+extern bool send_tune;
 
 //Directional Buttons and Transport Controls event=0xb0 On/Off = 127/0 (velocity)
 //nuber is in key field

@@ -1,4 +1,3 @@
-#include <stdbool.h>
 #include <globals.h>
 #include <midi_with_libfluidsynth.h>
 #include <config.h>
@@ -7,6 +6,7 @@ uint8_t tune_data[TUNE_LENGTH_MAX][11];
 fluid_synth_t* fluid_synth;
 
 int tune_length;
+bool send_tune;
 
 int main(int argvc, char* argv[]){
     char *tune_config_directory = (char*)&tune_data[50][0];
@@ -25,15 +25,18 @@ int main(int argvc, char* argv[]){
             printf("\nBad sound font.\n");
             return 1;
      }
-    if(read_tune_config(argv[1], tune_config_directory)) {
+
+    if (send_tune = argvc > 1) {
+        if(read_tune_config(argv[1], tune_config_directory)) {
             delete_fluid_synth(fluid_synth);
             delete_fluid_settings(fluid_settings);
             printf("\nBad tune configuration.\n");
             return 1;
-     }
-    if (read_midi_file_with_libfluidsynth(tune_config_directory)) {
-        printf("\nFile not foind.\n"); return 1;
-    }
+        }
+        if (read_midi_file_with_libfluidsynth(tune_config_directory)) {
+            printf("\nFile not foind.\n"); return 1;
+        }
+    } else printf ("\n>>>  Free play - '^C' to stop <<<\n\n");
     fluid_audio_driver_t* fluid_audio_driver = new_fluid_audio_driver(fluid_settings, fluid_synth);
     read_midi_keyboard_with_libfluidsynth(fluid_settings);
 
