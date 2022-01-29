@@ -10,7 +10,8 @@ This is the initial version that does almost nothing but check if the pianist pr
 There are utilized the follows control keys (transport controls mist be switched to the MIDI protocol):
 * "Play" – start again;
 * "Pause" – print some number of incoming notes (does not help);
-* "Stop" – quit.
+* "Stop" – quit;
+* "Left arrow" – go to begining of incoming notes.
 
 #### Usage
 There are two configuration files:
@@ -20,6 +21,9 @@ There are two configuration files:
 The program is started as:
 ```
 PianoPG tune.conf
+or
+PianoBG 
+for free play.
 ```
 The program requires libfluidsynth, version > 2.0.
 
