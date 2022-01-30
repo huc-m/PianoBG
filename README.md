@@ -7,11 +7,15 @@ PianoBG (BeGinner) is aspired from PianoBooster. PianoBoster is great program, v
 #### Functionality
 This is the initial version that does almost nothing but check if the pianist presses only right keys in a succession specified in a MIDI file.
 
-There are utilized the follows control keys (transport controls mist be switched to the MIDI protocol):
-* "Play" – start again;
-* "Pause" – print some number of incoming notes (does not help);
-* "Stop" – quit;
-* "Left arrow" – go to begining of incoming notes.
+Some buttons are utilized as follow (directional buttons and transport controls are expected to use the MIDI protocol):
+* general:
+  * "Play" – start again;
+  * "Pause" – print some number of incoming notes;
+  * "Stop" – quit.
+* for incoming notes only:
+  * "Left arrow" – backward;
+  * "Right arrow" – forward;
+  * "Enter" – from begining.
 
 #### Usage
 There are two configuration files:
@@ -26,7 +30,7 @@ or
 ```
 PianoBG 
 ```
-for free play.
+for unhampered play.
 
 The program requires libfluidsynth, version > 2.0.
 
