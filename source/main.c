@@ -9,6 +9,7 @@ int tune_length;
 bool send_tune;
 
 int main(int argvc, char* argv[]){
+    printf("\nWait for initialization ...\n\n"); fflush(stdout);
     char *tune_config_directory = (char*)&tune_data[50][0];
     if(read_config(tune_config_directory)) {printf("\nBad congiguration file.\n"); return 1;}
     fluid_settings_t* fluid_settings;
@@ -38,6 +39,7 @@ int main(int argvc, char* argv[]){
         }
     } else printf ("\n>>>  Free play - '^C' to stop <<<\n\n");
     fluid_audio_driver_t* fluid_audio_driver = new_fluid_audio_driver(fluid_settings, fluid_synth);
+    printf("\n... initialization complete. You would begin to play.\n\n"); fflush(stdout);
     read_midi_keyboard_with_libfluidsynth(fluid_settings);
 
     delete_fluid_audio_driver(fluid_audio_driver);

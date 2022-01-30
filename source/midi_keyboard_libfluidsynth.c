@@ -91,6 +91,17 @@ static int read_keyboard(void *data, fluid_midi_event_t *event){
                 }
             break;
             case MIDI_KEYBOARD_LEFT_BUTTON:
+            case MIDI_KEYBOARD_RIGHT_BUTTON:
+                if(notes) {
+                    if(note_key == MIDI_KEYBOARD_LEFT_BUTTON)
+                        {if(notes_pos > 0) notes_pos--;}
+                    else if(++notes_pos >= tune_length - 1) notes_pos = tune_length - 1;
+                    printf("\e[2J\e[1H");
+                    stature = print_coming_notes(cur_position = notes_pos);
+                    printf("\e[%i;r\e[?6l\e[%1$iH\e[s", stature+4);
+                }
+            break;
+            case MIDI_KEYBOARD_ENTER_BUTTON:
                 if(note_key){
                     cur_position = notes_pos;  printf("\e[s\e[%i;1H\e[2K\e[u", stature + 3); fflush(stdout);
                 }
