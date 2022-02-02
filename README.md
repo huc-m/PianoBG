@@ -31,7 +31,7 @@ or
 ```
 PianoBG 
 ```
-for unhampered play.
+for unhampered play (mentioned keys do not work).
 
 The program requires libfluidsynth, version > 2.0.
 
