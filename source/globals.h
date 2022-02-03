@@ -33,6 +33,8 @@ extern int number_of_coming_notes;
 
 extern int number_of_wrong_plays;
 
+extern bool staff_view;
+
 //Directional Buttons and Transport Controls event=0xb0 On/Off = 127/0 (velocity)
 //nuber is in key field
 

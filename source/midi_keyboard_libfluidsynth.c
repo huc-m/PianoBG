@@ -9,8 +9,11 @@ int8_t guys_tuple[11]; // [0] - total number
 
 int number_of_wrong_plays;
 
+int delta;
+
 bool notes;
 int stature, notes_pos;
+bool staff_view = false;
 
 static void guys_tuple_furnish_note(int note_key) {
     guys_tuple[++guys_tuple[0]] = note_key;
@@ -62,7 +65,7 @@ static void check_guys_tuple_and_go(){
         if(cur_position >= notes_pos + number_of_coming_notes || cur_position >= tune_length)
             {notes = false; printf("\e[;r\e[2J"); fflush(stdout);}
         else {
-            printf("\e[s\e[%i;1H%0*i\e[u",  stature + 3, (cur_position - notes_pos) * 4, 0);
+            printf("\e[s\e[%i;1H%0*i\e[u",  stature + 3, (cur_position - notes_pos) * delta, 0);
             fflush(stdout);
         }
     else {print_guys_progress(cur_position); fflush(stdout);}
@@ -95,7 +98,7 @@ static int read_keyboard(void *data, fluid_midi_event_t *event){
                 } else {
                     notes = true; notes_pos = cur_position;
                     printf("\e[2J\e[1H");
-                    stature = print_coming_notes(cur_position);
+                    stature = staff_view ? print_coming_notes_gs(cur_position) : print_coming_notes(cur_position);
                     printf("\e[%i;r\e[?6l\e[%1$iH\e[s", stature+4);
                 }
             break;
@@ -106,7 +109,7 @@ static int read_keyboard(void *data, fluid_midi_event_t *event){
                         {if(notes_pos > 0) notes_pos--;}
                     else if(++notes_pos >= tune_length - 1) notes_pos = tune_length - 1;
                     printf("\e[2J\e[1H");
-                    stature = print_coming_notes(cur_position = notes_pos);
+                    stature = staff_view ? print_coming_notes_gs(cur_position = notes_pos) :  print_coming_notes(cur_position = notes_pos);
                     printf("\e[%i;r\e[?6l\e[%1$iH\e[s", stature+4);
                 }
             break;
@@ -125,6 +128,8 @@ void read_midi_keyboard_with_libfluidsynth(fluid_settings_t* fluid_settings, boo
     pipe(control_pipe);
     char key;
     fluid_midi_driver_t* read_keyboard_driver;
+
+    delta = staff_view ? 3 : 4;
 
     if (has_tune)
         read_keyboard_driver = new_fluid_midi_driver(fluid_settings, read_keyboard, NULL);
