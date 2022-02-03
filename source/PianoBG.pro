@@ -20,3 +20,7 @@ HEADERS += \
 
 LIBS += \
     -lfluidsynth
+
+DISTFILES += \
+    ../config/PianoBG.conf \
+    ../config/tune.conf

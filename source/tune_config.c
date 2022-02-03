@@ -31,6 +31,9 @@ int read_tune_config (char* config_file, char* midi_file){
          if(!strcmp(option, "metronome_pattern_size" )) {metronome_pattern_size = value; continue;}
          if(!strcmp(option, "metronome_velocity" )) {metronome_velocity = value; continue;}
          if(!strcmp(option, "metronome_channel" )) {metronome_channel = value; continue;}
+
+         if(!strcmp(option, "staff_view" )) {staff_view = value != 0; continue;}
+
     }
     fclose(conf_file); return 0;
 }
