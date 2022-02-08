@@ -31,6 +31,9 @@ extern int wrong_note_velocity;
 extern int guys_progress_breadth;
 extern int number_of_coming_notes;
 
+extern int pad_coming_notes;
+
+
 extern int number_of_wrong_plays;
 
 extern bool staff_view;
