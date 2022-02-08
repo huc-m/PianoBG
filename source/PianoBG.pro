@@ -25,4 +25,5 @@ DISTFILES += \
     ../binary/PianoBG \
     ../binary/libfluidsynth.so.3.0.4 \
     ../config/PianoBG.conf \
-    ../config/tune.conf
+    ../config/tune.conf \
+    ../utilites/play.sh

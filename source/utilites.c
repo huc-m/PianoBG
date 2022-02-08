@@ -1,19 +1,19 @@
 #include <globals.h>
 #include <stdio.h>
 
+static const char* note_names="C C#D D#E F F#G G#A A#B c c#d d#e f f#g g#a a#b ";
+
 char* note_from_midi_code(uint8_t note_key, char note[4]){
-    static const char* name="C C#D D#E F F#G G#A A#B ";
     ((uint16_t*) note)[1] = ' ';
-    ((uint16_t*) note)[0] = ((uint16_t*) name)[note_key % 12];
+    ((uint16_t*) note)[0] = ((uint16_t*) note_names)[note_key % 12];
     note[1 + (note[1] == '#')] = '0' + note_key / 12 - 1;
     return note;
 }
 
 static bool note_from_note_key(uint8_t note_key, char note[2]){ // true => C#; false => C
-    static const char* name="C C#D D#E F F#G G#A A#B c c#d d#e f f#g g#a a#b ";
     ((uint16_t*)note)[0] = note_key > 0b10000000 ?
-        ((uint16_t*)name)[(note_key & 0b01111111) % 12] :
-        ((uint16_t*)&name[24])[(note_key & 0b01111111) % 12];
+        ((uint16_t*)note_names)[(note_key & 0b01111111) % 12] :
+        ((uint16_t*)&note_names[24])[(note_key & 0b01111111) % 12];
     return note[1] == '#';
 }
 
@@ -67,6 +67,7 @@ int print_coming_notes_gs(int position) { // r_hand staff E4(64) - F5(77)
         }
         printf("\n");
     }
+     for(h_pos = position; h_pos < end; h_pos += 2) printf("%-6i", h_pos); fflush(stdout);
     return r(hight_pos) - r(low_pos);
 }
 
@@ -116,6 +117,6 @@ int print_coming_notes(int position) {
         }
         printf("\n");
     }
+    for(i = position; i < end; i += 2)  printf("%-8i", i); fflush(stdout);
     return stature + max_h;
 }
-

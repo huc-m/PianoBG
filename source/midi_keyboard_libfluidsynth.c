@@ -9,8 +9,6 @@ int8_t guys_tuple[11]; // [0] - total number
 
 int number_of_wrong_plays;
 
-int delta;
-
 bool notes;
 int stature, notes_pos;
 bool staff_view = false;
@@ -62,12 +60,24 @@ static void check_guys_tuple_and_go(){
     }
     guys_tuple[0] = 0; ++cur_position;
     if(notes)
-        if(cur_position >= notes_pos + number_of_coming_notes || cur_position >= tune_length)
-            {notes = false; printf("\e[;r\e[2J"); fflush(stdout);}
-        else {
-            printf("\e[s\e[%i;1H%0*i\e[u",  stature + 3, (cur_position - notes_pos) * delta, 0);
-            fflush(stdout);
-        }
+        if(staff_view)
+            if(cur_position >= notes_pos + number_of_coming_notes - pad_coming_notes) {
+                notes_pos = cur_position - pad_coming_notes; if(notes_pos < 0) notes_pos = 0;
+                printf("\e[2J\e[1H");
+                stature = print_coming_notes_gs(notes_pos);
+                printf("\e[%i;r\e[?6l\e[%1$iH\e[s", stature+4);
+                printf("\e[s\e[%i;1H%0*i\e[u",  stature + 3, (cur_position - notes_pos) * 3, 0); fflush(stdout);
+            } else {
+                printf("\e[s\e[%i;1H%0*i\e[u",  stature + 3, (cur_position - notes_pos) * 3, 0);
+                fflush(stdout);
+            }
+        else
+            if(cur_position >= notes_pos + number_of_coming_notes || cur_position >= tune_length)
+                {notes = false; printf("\e[;r\e[2J"); fflush(stdout);}
+            else {
+                printf("\e[s\e[%i;1H%0*i\e[u",  stature + 3, (cur_position - notes_pos) * 4, 0);
+                fflush(stdout);
+            }
     else {print_guys_progress(cur_position); fflush(stdout);}
     if(cur_position >= tune_length) write(control_pipe[1], "e", 1);
     return;
@@ -128,8 +138,6 @@ void read_midi_keyboard_with_libfluidsynth(fluid_settings_t* fluid_settings, boo
     pipe(control_pipe);
     char key;
     fluid_midi_driver_t* read_keyboard_driver;
-
-    delta = staff_view ? 3 : 4;
 
     if (has_tune)
         read_keyboard_driver = new_fluid_midi_driver(fluid_settings, read_keyboard, NULL);
