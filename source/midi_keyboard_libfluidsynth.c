@@ -94,8 +94,8 @@ static int read_keyboard(void *data, fluid_midi_event_t *event){
         else {
             play_guys_note(note_key, note_velocity);
             guys_tuple_furnish_note(fluid_midi_event_get_key(event));
-            check_guys_tuple_and_go();
         }
+        check_guys_tuple_and_go();
         return FLUID_OK;
     }
     if(event_type == 0xb0 && note_velocity > 0){
