@@ -90,8 +90,10 @@ static int read_keyboard(void *data, fluid_midi_event_t *event){
 
     if(event_type == 0x80) {event_type = 0x90; note_velocity = 0;}
     if(event_type == 0x90) {
-        if (note_velocity == 0) guys_tuple_dispatch_note(note_key);
-        else {
+        if (note_velocity == 0) {
+            guys_tuple_dispatch_note(note_key);
+            check_guys_tuple_and_go();
+        } else {
             play_guys_note(note_key, note_velocity);
             guys_tuple_furnish_note(fluid_midi_event_get_key(event));
             check_guys_tuple_and_go();
