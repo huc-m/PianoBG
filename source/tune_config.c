@@ -38,6 +38,8 @@ int read_tune_config (char* config_file, char* midi_file){
          if(!strcmp(option, "number_of_coming_notes")) {number_of_coming_notes = value; continue;}
          if(!strcmp(option, "pad_coming_notes")) {pad_coming_notes = value; continue;}
 
+         if(!strcmp(option, "wrong_note_velocity"   )) {wrong_note_velocity = value; continue;}
+
     }
     fclose(conf_file); return 0;
 }
