@@ -29,7 +29,10 @@ static void play_guys_note(int note_key, int note_velocity) {
                 fluid_synth_noteon(fluid_synth, synth_channel_out, note_key, note_velocity);
                 print_guys_wrong_note(cur_position, note_key); return;
             }
-    fluid_synth_noteon(fluid_synth, synth_channel_out, wrong_note_key, wrong_note_velocity);
+    if(wrong_note_velocity < 0)
+        fluid_synth_noteon(fluid_synth, synth_channel_out, note_key, note_velocity);
+    else
+        fluid_synth_noteon(fluid_synth, synth_channel_out, wrong_note_key, wrong_note_velocity);
     print_guys_wrong_note(cur_position, note_key);
 }
 
